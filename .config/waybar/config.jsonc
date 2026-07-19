@@ -1,0 +1,65 @@
+{
+    "layer": "top",
+    "position": "top",
+    "margin-top": 5,
+    "margin-left": 10,
+    "margin-right": 10,
+    "spacing": 4,
+
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["custom/analog-clock", "custom/cpu"],
+    "modules-right": ["custom/bluetooth", "pulseaudio", "hyprland/language", "custom/power"],
+
+    "hyprland/workspaces": {
+        "format": "{name}"
+    }, 
+    "hyprland/language": {
+        "format": "  {}",
+        "format-en": "us",
+        "format-es": "es"
+    }, 
+    "custom/analog-clock": {
+        "exec": "sh ~/.config/waybar/scripts/analog-clock.sh",
+        "interval": 1,
+        "tooltip": true,
+        "return-type": "json",
+        "format": "{}"
+    },
+    "custom/power": {
+        "format": "🔌",
+        "tooltip": false,
+        "on-click": "echo -e 'Apagar\nReiniciar\nSuspender\nCerrar Sesión' | wofi --dmenu --width 200 --height 220 --conf /dev/null --cache-file /dev/null | xargs -I {} sh -c 'case \"{}\" in \"Apagar\") systemctl poweroff ;; \"Reiniciar\") systemctl reboot ;; \"Suspender\") systemctl suspend ;; \"Cerrar Sesión\") hyprctl dispatch exit ;; esac'"
+    },
+    "custom/cpu": {
+        "exec": "sh ~/.config/waybar/scripts/cpu-popup.sh",
+        "interval": 2,
+        "return-type": "json",
+        "format": "",
+        "tooltip": true
+    },
+    "custom/bluetooth": {
+        "exec": "sh ~/.config/waybar/scripts/bluetooth-toggle.sh",
+        "interval": 2,
+        "return-type": "json",
+        "format": "{text}",
+        "tooltip": false,
+        "on-click": "sh ~/.config/waybar/scripts/bluetooth-toggle.sh toggle",
+        "exec-on-event": true
+    },
+    "pulseaudio": {
+        "format": "{icon}",
+        "format-bluetooth": "{icon} ",
+        "format-muted": "<s>{icon}</s>",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "scroll-step": 5,
+        "on-click": "pavucontrol"
+    }
+}

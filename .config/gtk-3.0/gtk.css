@@ -1,0 +1,212 @@
+/* --- ENTORNO GLOBAL DE THUNAR --- */
+
+/* Fondo principal de la lista de archivos y carpetas */
+ThunarWindow thunar-view, 
+ThunarWindow exo-icon-view, 
+ThunarWindow GtkTreeView,
+.view {
+    background-color: #1e1e2e;
+    color: #cdd6f4;
+}
+
+/* Panel Lateral (Lista de Lugares y Dispositivos) */
+ThunarWindow GtkTreeView.sidebar,
+ThunarWindow .sidebar,
+ThunarWindow .sidebar .view {
+    background-color: #181825;
+    color: #a6adc8;
+}
+
+/* --- ELEMENTOS SELECCIONADOS (FILAS Y ELEMENTOS ACTIVOS) --- */
+
+/* Carpeta o archivo seleccionado o bajo el cursor */
+ThunarWindow thunar-view:selected, 
+ThunarWindow GtkTreeView:selected,
+ThunarWindow .sidebar :selected,
+.view:selected,
+.view:hover {
+    background-color: #89b4fa;
+    color: #11111b;
+}
+
+/* --- BARRA DE RUTA Y BOTONES SUPERIORES --- */
+
+/* Barra de herramientas superior */
+ThunarWindow toolbar, 
+ThunarWindow .toolbar {
+    background-color: #11111b;
+    border-bottom: 1px solid #313244;
+    padding: 4px;
+}
+
+/* Botones de la barra de direcciones (Estilo plano y limpio) */
+ThunarWindow .path-bar-button {
+    background-image: none;
+    background-color: transparent;
+    border: none;
+    color: #cdd6f4;
+}
+
+/* Botón de la barra de ruta al pasar el ratón */
+ThunarWindow .path-bar-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #89b4fa;
+}
+
+/* --- BARRA DE ESTADO (PARTE INFERIOR) --- */
+ThunarWindow statusbar,
+ThunarWindow .statusbar {
+    background-color: #11111b;
+    color: #a6adc8;
+    border-top: 1px solid #313244;
+}
+
+/* --- PARCHE PARA ARREGLAR LA BARRA SUPERIOR BLANCA --- */
+
+/* Forzar color oscuro en la barra de título de la ventana */
+window, 
+.window-frame, 
+headerbar, 
+.titlebar,
+ThunarWindow headerbar {
+    background-color: #11111b;
+    color: #cdd6f4;
+}
+
+/* Forzar color oscuro en la barra de menús (Archivo, Editar, Ver) */
+menubar, 
+.menubar {
+    background-color: #11111b;
+    color: #cdd6f4;
+}
+
+/* Ajustar los botones de cerrar, minimizar y maximizar */
+window .titlebutton, 
+headerbar button {
+    color: #cdd6f4;
+    background-color: transparent;
+}
+
+window .titlebutton:hover, 
+headerbar button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* --- PARCHE PARA LA BARRA DE BÚSQUEDA Y ENTRADAS DE TEXTO --- */
+
+/* Fondo oscuro para la barra de búsqueda y campos de texto */
+entry, 
+.entry,
+ThunarWindow entry,
+ThunarWindow text {
+    background-color: #313244;
+    color: #cdd6f4;
+    border: 1px solid #45475a;
+    border-radius: 6px;
+    padding: 4px;
+}
+
+/* Color del texto de sugerencia (Placeholder como "Buscar...") */
+entry text selection,
+entry:disabled {
+    color: #585b70;
+}
+
+/* Cambiar el color del borde cuando haces clic dentro de la búsqueda */
+entry:focus, 
+.entry:focus {
+    border-color: #89b4fa;
+}
+
+/* --- PARCHE PARA MENÚS DESPLEGABLES Y DIÁLOGOS DE CONFIGURACIÓN --- */
+
+/* Fondo oscuro para todos los menús desplegables y ventanas de diálogo */
+menu, 
+.menu, 
+.popup,
+dialog,
+.dialog,
+window.dialog {
+    background-color: #11111b;
+    color: #cdd6f4;
+    border: 1px solid #313244;
+}
+
+/* Elementos individuales dentro de los menús (Archivo, Editar, Ver...) */
+menuitem, 
+.menuitem,
+modelbutton {
+    background-color: transparent;
+    color: #cdd6f4;
+    padding: 4px 8px;
+}
+
+/* Cuando pasas el mouse por encima de un menú o una opción */
+menuitem:hover, 
+.menuitem:hover,
+modelbutton:hover,
+menu item:hover {
+    background-color: #89b4fa;
+    color: #11111b;
+}
+
+/* Ajuste para las pestañas de las ventanas de configuración (Preferencias) */
+notebook,
+.notebook,
+notebook stack {
+    background-color: #181825;
+    color: #cdd6f4;
+    border: none;
+}
+
+notebook header tabs tab {
+    background-color: #11111b;
+    color: #a6adc8;
+}
+
+notebook header tabs tab:checked {
+    background-color: #1e1e2e;
+    color: #89b4fa;
+}
+
+/* --- ESTILO PARA EL CALENDARIO DE ZENITY --- */
+
+window.dialog,
+dialog,
+.background {
+    background-color: rgba(17, 17, 27, 0.95);
+    color: #cdd6f4;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 18px;
+}
+
+calendar,
+calendar.view {
+    background-color: transparent;
+    color: #cdd6f4;
+    padding: 12px;
+}
+
+calendar:selected,
+calendar:selected:focus {
+    background-color: rgba(137, 180, 250, 0.22);
+    color: #ffffff;
+}
+
+calendar.button,
+calendar button,
+calendar header button {
+    background-color: transparent;
+    color: #cdd6f4;
+    border-radius: 10px;
+}
+
+calendar button:hover,
+calendar header button:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #ffffff;
+}
+
+label {
+    color: #cdd6f4;
+}
