@@ -31,7 +31,17 @@ refresh_bar() {
       pkill -x waybar || true
       nohup waybar >/dev/null 2>&1 &
     else
-      echo "Waybar no esta en ejecucion; no se inicia desde el instalador."
+      echo "Waybar no esta en ejecucion; intentando iniciarlo..."
+      # Si Waybar está instalado, lanzarlo en segundo plano.
+      if command -v waybar >/dev/null 2>&1; then
+        nohup waybar >/dev/null 2>&1 &
+        sleep 0.5
+        if pgrep -x waybar >/dev/null 2>&1; then
+          echo "Waybar iniciado."
+        else
+          echo "No se pudo iniciar Waybar desde el instalador. Inicialo manualmente o revisa logs." >&2
+        fi
+      fi
     fi
     return 0
   fi
