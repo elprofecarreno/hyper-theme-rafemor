@@ -42,7 +42,7 @@ fi
 # Nota: el paquete es 'blueman' (incluye el ejecutable blueman-applet).
 # Bloqueo: hyprlock para conservar la misma sesion al desbloquear.
 # Audio: PipeWire + WirePlumber + compatibilidad PulseAudio + panel pavucontrol.
-PACKAGES="waybar dunst hyprland hyprpaper rofi thunar kitty blueman hyprlock pavucontrol wireplumber zenity ttf-jetbrains-mono-nerd jq"
+PACKAGES="waybar dunst hyprland hyprpaper rofi thunar thunar-archive-plugin kitty blueman hyprlock pavucontrol wireplumber zenity ttf-jetbrains-mono-nerd jq wl-clipboard cliphist p7zip unrar curl wget grim slurp fastfetch imv mpv brightnessctl"
 
 if [ "$(id -u)" -eq 0 ]; then
   SUDO_CMD=""
