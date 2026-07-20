@@ -11,6 +11,13 @@ fi
 LOCK_FILE="/tmp/rofi_power_menu.lock"
 current_time=$(date +%s%3N)
 
+lock_before_sleep() {
+    if ! pgrep -x hyprlock >/dev/null 2>&1; then
+        hyprlock >/dev/null 2>&1 &
+        sleep 0.4
+    fi
+}
+
 if [ -f "$LOCK_FILE" ]; then
     last_time=$(cat "$LOCK_FILE")
     time_diff=$((current_time - last_time))
@@ -43,8 +50,8 @@ date +%s%3N > "$LOCK_FILE"
 # Execute action
 case "$action" in
     "Bloquear") hyprlock ;;
-    "Suspender") systemctl suspend ;;
-    "Hibernar") systemctl hibernate ;;
+    "Suspender") lock_before_sleep; systemctl suspend ;;
+    "Hibernar") lock_before_sleep; systemctl hibernate ;;
     "Reiniciar") systemctl reboot ;;
     "Cerrar Sesión") hyprctl dispatch exit ;;
     "Apagar") systemctl poweroff ;;
