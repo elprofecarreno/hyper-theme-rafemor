@@ -8,9 +8,14 @@ if [ -f "$SCRIPT_DIR/i18n.sh" ]; then
     . "$SCRIPT_DIR/i18n.sh"
 fi
 
-# Get current layout name/code from Hyprland
-# Avoid relying on a specific keyboard device name, which can differ between VMs and real hardware.
-layout_name=$(hyprctl devices -j 2>/dev/null | jq -r '.keyboards[]? | select(.active_keymap != null and .active_keymap != "") | .active_keymap' | head -n 1)
+# Get current layout name/code from Hyprland.
+# Prefer the active keymap from any keyboard, but keep the legacy device name as fallback for VMs.
+devices_json=$(hyprctl devices -j 2>/dev/null || true)
+layout_name=$(printf '%s\n' "$devices_json" | jq -r '.keyboards[]? | select(.active_keymap != null and .active_keymap != "") | .active_keymap' 2>/dev/null | awk 'NF { print; exit }')
+
+if [ -z "$layout_name" ]; then
+    layout_name=$(printf '%s\n' "$devices_json" | jq -r '.keyboards[]? | select(.name == "at-translated-set-2-keyboard") | .active_keymap' 2>/dev/null | awk 'NF { print; exit }')
+fi
 
 if [ -z "$layout_name" ]; then
     layout_name="English (US)"
