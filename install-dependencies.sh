@@ -42,7 +42,50 @@ fi
 # Nota: el paquete es 'blueman' (incluye el ejecutable blueman-applet).
 # Bloqueo: hyprlock para conservar la misma sesion al desbloquear.
 # Audio: PipeWire + WirePlumber + compatibilidad PulseAudio + panel pavucontrol.
-PACKAGES="waybar dunst hyprland hyprpaper rofi thunar thunar-archive-plugin kitty blueman hyprlock pavucontrol wireplumber zenity ttf-jetbrains-mono-nerd jq wl-clipboard cliphist p7zip unrar curl wget grim slurp fastfetch imv mpv brightnessctl"
+
+PACKAGES="hyprland pavucontrol wireplumber zenity wl-clipboard cliphist grim slurp imv mpv brightnessctl"
+
+# Add font packages
+FONT_PACKAGES="ttf-jetbrains-mono-nerd ttf-roboto ttf-roboto-mono"
+FONT_PACKAGES="$FONT_PACKAGES ttf-fira-code"
+FONT_PACKAGES="$FONT_PACKAGES ttf-fira-mono ttf-fira-sans"
+PACKAGES="$PACKAGES $FONT_PACKAGES"
+
+# Add hyprland tools
+HYPRLAND_TOOLS="hyprpicker hyprpaper hyprlock"
+PACKAGES="$PACKAGES $HYPRLAND_TOOLS"
+
+# Add terminal
+TERMINAL="kitty"
+PACKAGES="$PACKAGES $TERMINAL"
+
+# Add terminal tools
+TERMINAL_TOOLS="btop fastfetch"
+PACKAGES="$PACKAGES $TERMINAL_TOOLS"
+
+# Add folder and file management tools
+FOLDER_FILE_TOOLS="thunar thunar-archive-plugin"
+PACKAGES="$PACKAGES $FOLDER_FILE_TOOLS"
+
+# Add bluetooth tools
+BLUETOOTH_TOOLS="blueman"
+PACKAGES="$PACKAGES $BLUETOOTH_TOOLS"
+
+# Add bar and notification tools
+BAR_NOTIFICATION_TOOLS="waybar dunst rofi"
+PACKAGES="$PACKAGES $BAR_NOTIFICATION_TOOLS"
+
+# Add web terminal tools
+WEB_TERMINAL_TOOLS="curl wget jq"
+PACKAGES="$PACKAGES $WEB_TERMINAL_TOOLS"
+
+# Add compress tools
+COMPRESS_TOOLS="zip unzip tar gzip bzip2 xz p7zip unrar"
+PACKAGES="$PACKAGES $COMPRESS_TOOLS"
+
+# Add teams packages streaming support
+# TEAMS_PACKAGES="xdg-desktop-portal-hyprland xdg-desktop-portal pipewire wireplumber"
+# PACKAGES="$PACKAGES $TEAMS_PACKAGES"
 
 if [ "$(id -u)" -eq 0 ]; then
   SUDO_CMD=""
