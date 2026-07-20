@@ -9,7 +9,12 @@ if [ -f "$SCRIPT_DIR/i18n.sh" ]; then
 fi
 
 # Get current layout name/code from Hyprland
-layout_name=$(hyprctl devices -j | jq -r '.keyboards[] | select(.name == "at-translated-set-2-keyboard") | .active_keymap' 2>/dev/null || echo "English (US)")
+# Avoid relying on a specific keyboard device name, which can differ between VMs and real hardware.
+layout_name=$(hyprctl devices -j 2>/dev/null | jq -r '.keyboards[]? | select(.active_keymap != null and .active_keymap != "") | .active_keymap' | head -n 1)
+
+if [ -z "$layout_name" ]; then
+    layout_name="English (US)"
+fi
 
 # Map long name to short layout code
 case "$layout_name" in
