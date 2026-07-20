@@ -2,6 +2,13 @@
 
 set -eu
 
+# Sourcing translations
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+if [ -f "$SCRIPT_DIR/i18n.sh" ]; then
+    . "$SCRIPT_DIR/i18n.sh"
+fi
+
+
 cpu_sample() {
     awk '/^cpu / { total = 0; for (i = 2; i <= 8; i++) total += $i; idle = $5 + $6; printf "%s %s\n", total, idle; exit }' /proc/stat
 }
@@ -90,33 +97,29 @@ if command -v nvidia-smi >/dev/null 2>&1; then
     fi
 fi
 
+lbl_core="$(printf '%-13s' "${TXT_CORE}:")"
+lbl_ram="$(printf '%-13s' "${TXT_RAM}:")"
+lbl_vram="$(printf '%-13s' "${TXT_VRAM}:")"
+lbl_net="$(printf '%-13s' "${TXT_NET}:")"
+lbl_ip="$(printf '%-13s' "${TXT_IP_LOCAL}:")"
+
 if command -v jq >/dev/null 2>&1; then
+    tooltip_content=$(printf "%s%s (%s%%)\n%s%s / %s (%s%%)\n%s%s / %s (%s%%)\n%s%s kbps / %s\n%s%s" \
+        "$lbl_core" "$core_count" "$cpu_usage" \
+        "$lbl_ram" "$mem_used_gb" "$mem_total_gb" "$mem_usage" \
+        "$lbl_vram" "$vram_used" "$vram_total_gb" "$vram_usage" \
+        "$lbl_net" "$net_kbps" "$net_speed" \
+        "$lbl_ip" "$ip_addr")
     jq -nc \
         --arg text "$cpu_usage" \
-        --arg core_count "$core_count" \
-        --arg cpu_usage "$cpu_usage" \
-        --arg mem_used "$mem_used_gb" \
-        --arg mem_total "$mem_total_gb" \
-        --arg mem_usage "$mem_usage" \
-        --arg vram_used "$vram_used" \
-        --arg vram_total "$vram_total_gb" \
-        --arg vram_usage "$vram_usage" \
-        --arg net_kbps "$net_kbps" \
-        --arg net_speed "$net_speed" \
-        --arg ip_addr "$ip_addr" \
-        '{text: $text, tooltip: "core:         \($core_count) (\($cpu_usage)%)\nram:          \($mem_used) / \($mem_total) (\($mem_usage)%)\nvram:         \($vram_used) / \($vram_total) (\($vram_usage)%)\nred:          \($net_kbps) kbps / \($net_speed)\nip local:     \($ip_addr)"}'
+        --arg tooltip "$tooltip_content" \
+        '{text: $text, tooltip: $tooltip}'
 else
-    printf '{"text":"%s","tooltip":"core:   %s (%s%%)\nram:    %s / %s (%s%%)\nvram:   %s / %s (%s%%)\nred:    %s kbps / %s\nip:     %s"}\n' \
+    printf '{"text":"%s","tooltip":"%s%s (%s%%)\n%s%s / %s (%s%%)\n%s%s / %s (%s%%)\n%s%s kbps / %s\n%s%s"}\n' \
         "$cpu_usage" \
-        "$core_count" \
-        "$cpu_usage" \
-        "$mem_used_gb" \
-        "$mem_total_gb" \
-        "$mem_usage" \
-        "$vram_used" \
-        "$vram_total_gb" \
-        "$vram_usage" \
-        "$net_kbps" \
-        "$net_speed" \
-        "$ip_addr"
+        "$lbl_core" "$core_count" "$cpu_usage" \
+        "$lbl_ram" "$mem_used_gb" "$mem_total_gb" "$mem_usage" \
+        "$lbl_vram" "$vram_used" "$vram_total_gb" "$vram_usage" \
+        "$lbl_net" "$net_kbps" "$net_speed" \
+        "$lbl_ip" "$ip_addr"
 fi

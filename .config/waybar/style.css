@@ -16,7 +16,7 @@ window#waybar {
 }
 
 /* Estilo para los bloques o módulos individuales */
-#workspaces, #custom-analog-clock, #clock, #cpu, #custom-cpu, #bluetooth, #pulseaudio {
+#workspaces, #custom-analog-clock, #clock, #cpu, #custom-cpu, #bluetooth, #pulseaudio, #custom-language {
     padding: 0 12px;
     background-color: rgba(43, 48, 59, 0.5);
     border-radius: 6px;
@@ -46,23 +46,23 @@ window#waybar {
 }
 
 #custom-analog-clock {
-    color: #7aa2f7;
+    color: #c0caf5;
     font-weight: bold;
 }
 
 #custom-analog-clock:hover {
-    background-color: rgba(122, 162, 247, 0.22);
+    background-color: rgba(192, 202, 245, 0.22);
     color: #ffffff;
 }
 
 /* Modulos específicos */
 #clock {
-    color: #7aa2f7;
+    color: #c0caf5;
     font-weight: bold;
 }
 
 #clock:hover {
-    background-color: rgba(122, 162, 247, 0.22);
+    background-color: rgba(192, 202, 245, 0.22);
     color: #ffffff;
 }
 
@@ -87,7 +87,7 @@ window#waybar {
 }
 
 #custom-power {
-    color: #ff5555; /* Color rojo para el botón */
+    color: #c0caf5;
     font-size: 16px;
     padding-left: 10px;
     padding-right: 15px;
@@ -95,8 +95,8 @@ window#waybar {
 }
 
 #custom-power:hover {
-    color: #ff6e6e; /* Se ilumina un poco más al pasar el cursor */
-    background-color: rgba(255, 85, 85, 0.2);
+    color: #ffffff;
+    background-color: rgba(192, 202, 245, 0.2);
     border-radius: 4px;
 }
 

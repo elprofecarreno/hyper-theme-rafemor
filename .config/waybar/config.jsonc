@@ -5,19 +5,28 @@
     "margin-left": 10,
     "margin-right": 10,
     "spacing": 4,
-
-    "modules-left": ["hyprland/workspaces"],
-    "modules-center": ["custom/analog-clock", "custom/cpu"],
-    "modules-right": ["custom/bluetooth", "pulseaudio", "hyprland/language", "custom/power"],
-
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "custom/analog-clock",
+        "custom/cpu"
+    ],
+    "modules-right": [
+        "custom/bluetooth",
+        "pulseaudio",
+        "custom/language",
+        "custom/power"
+    ],
     "hyprland/workspaces": {
         "format": "{name}"
-    }, 
-    "hyprland/language": {
-        "format": "  {}",
-        "format-en": "us",
-        "format-es": "es"
-    }, 
+    },
+    "custom/language": {
+        "exec": "sh ~/.config/waybar/scripts/language-tooltip.sh",
+        "interval": 1,
+        "return-type": "json",
+        "format": "  {}"
+    },
     "custom/analog-clock": {
         "exec": "sh ~/.config/waybar/scripts/analog-clock.sh",
         "interval": 1,
@@ -26,9 +35,9 @@
         "format": "{}"
     },
     "custom/power": {
-        "format": "🔌",
+        "format": "",
         "tooltip": false,
-        "on-click": "echo -e 'Apagar\nReiniciar\nSuspender\nCerrar Sesión' | wofi --dmenu --width 200 --height 220 --conf /dev/null --cache-file /dev/null | xargs -I {} sh -c 'case \"{}\" in \"Apagar\") systemctl poweroff ;; \"Reiniciar\") systemctl reboot ;; \"Suspender\") systemctl suspend ;; \"Cerrar Sesión\") hyprctl dispatch exit ;; esac'"
+        "on-click": "sh ~/.config/waybar/scripts/power-menu.sh"
     },
     "custom/cpu": {
         "exec": "sh ~/.config/waybar/scripts/cpu-popup.sh",
@@ -57,7 +66,11 @@
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["", "", ""]
+            "default": [
+                "",
+                "",
+                ""
+            ]
         },
         "scroll-step": 5,
         "on-click": "pavucontrol"

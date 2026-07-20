@@ -1,0 +1,103 @@
+configuration {
+    modi: "drun,run";
+    font: "JetBrainsMono Nerd Font 11";
+    show-icons: true;
+    icon-theme: "Papirus";
+    terminal: "kitty";
+    drun-display-format: "{icon} {name}";
+    location: 0;
+    disable-history: false;
+    hide-scrollbar: true;
+    display-drun: "   Apps ";
+    display-run: "   Run ";
+    sidebar-mode: true;
+}
+
+@theme "/dev/null"
+
+* {
+    bg-col: rgba(17, 17, 27, 0.96);
+    border-col: rgba(255, 255, 255, 0.14);
+    selected-col: #7aa2f7;
+    text-col: #cdd6f4;
+    text-sel: #1a1b26;
+    width: 600;
+}
+
+window {
+    height: 360px;
+    border: 1px;
+    border-color: @border-col;
+    border-radius: 12px;
+    background-color: @bg-col;
+}
+
+mainbox {
+    background-color: transparent;
+    children: [ inputbar, listview ];
+}
+
+inputbar {
+    children: [ prompt, entry ];
+    background-color: transparent;
+    padding: 10px;
+}
+
+prompt {
+    background-color: @selected-col;
+    padding: 6px;
+    text-color: @text-sel;
+    border-radius: 6px;
+    margin: 10px 0px 0px 10px;
+}
+
+entry {
+    padding: 6px;
+    margin: 10px 10px 0px 10px;
+    text-color: @text-col;
+    background-color: transparent;
+    placeholder: "Search applications...";
+    placeholder-color: rgba(255, 255, 255, 0.3);
+}
+
+listview {
+    border: 0px 0px 0px;
+    padding: 6px 10px 10px;
+    margin: 10px 10px 10px 10px;
+    columns: 1;
+    lines: 6;
+    background-color: transparent;
+}
+
+element {
+    padding: 8px;
+    background-color: transparent;
+    text-color: @text-col;
+    border-radius: 6px;
+}
+
+element-icon {
+    size: 24px;
+    background-color: transparent;
+}
+
+element-text {
+    vertical-align: 0.5;
+    background-color: transparent;
+    text-color: inherit;
+}
+
+element normal.normal {
+    background-color: transparent;
+    text-color: @text-col;
+}
+
+element alternate.normal {
+    background-color: transparent;
+    text-color: @text-col;
+}
+
+element selected.normal {
+    background-color: @selected-col;
+    text-color: @text-sel;
+}

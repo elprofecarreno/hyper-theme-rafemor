@@ -56,6 +56,20 @@ refresh_bar() {
   echo "No se detecto una barra en ejecucion para refrescar (Waybar/Polybar)."
 }
 
+refresh_wallpaper() {
+  # Refresca hyprpaper si esta corriendo o instalado.
+  if command -v hyprpaper >/dev/null 2>&1; then
+    if pgrep -x hyprpaper >/dev/null 2>&1; then
+      echo "Refrescando hyprpaper..."
+      pkill -x hyprpaper || true
+      sleep 0.2
+    fi
+    echo "Iniciando hyprpaper..."
+    nohup hyprpaper >/dev/null 2>&1 &
+  fi
+}
+
+
 for arg in "$@"; do
   case "$arg" in
     --dry-run)
@@ -139,7 +153,39 @@ else
 fi
 
 if [ "$DRY_RUN" = "false" ]; then
+  # Reemplazar la tilde (~) por la ruta absoluta de $HOME en hyprpaper.conf
+  HYPRPAPER_CONF="$HOME/.config/hypr/hyprpaper.conf"
+  if [ -f "$HYPRPAPER_CONF" ]; then
+    sed -i "s|~|$HOME|g" "$HYPRPAPER_CONF"
+  fi
+
+  # Traducir los textos de Rofi (config.rasi) según el idioma seleccionado
+  ROFI_CONF="$HOME/.config/rofi/config.rasi"
+  if [ -f "$ROFI_CONF" ]; then
+    LOCAL_LANG="us"
+    WAYBAR_CONF_SH="$HOME/.config/waybar/config.sh"
+    if [ -f "$WAYBAR_CONF_SH" ]; then
+      . "$WAYBAR_CONF_SH"
+      LOCAL_LANG="$WAYBAR_LANG"
+    fi
+
+    if [ "$LOCAL_LANG" = "es" ]; then
+      sed -i 's/placeholder: "Search applications..."/placeholder: "Buscar aplicaciones..."/g' "$ROFI_CONF"
+      sed -i 's/display-drun: "   Apps "/display-drun: "   Aplicaciones "/g' "$ROFI_CONF"
+    else
+      sed -i 's/placeholder: "Buscar aplicaciones..."/placeholder: "Search applications..."/g' "$ROFI_CONF"
+      sed -i 's/display-drun: "   Aplicaciones "/display-drun: "   Apps "/g' "$ROFI_CONF"
+    fi
+  fi
+
   refresh_bar
+  refresh_wallpaper
+
+  # Refrescar Dunst (notificaciones)
+  if pgrep -x dunst >/dev/null 2>&1; then
+    echo "Refrescando Dunst (notificaciones)..."
+    pkill -x dunst || true
+  fi
 else
-  echo "Dry-run: no se refresca la barra."
+  echo "Dry-run: no se refrescan los componentes (Waybar/hyprpaper/Dunst)."
 fi
